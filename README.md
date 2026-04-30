@@ -19,4 +19,5 @@ cd ..
 cd app/Live2D
 wget https://hf-mirror.com/Lvshu6/Live2Diff/resolve/main/Live2D/nuero.zip
 unzip nuero.zip
+python app_qt5.py
 ```
