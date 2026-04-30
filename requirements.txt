@@ -1,0 +1,7 @@
+matplotlib
+flow_vis
+tqdm
+tensorboard
+fastapi == 0.128.0
+uvicorn
+PyQt6
