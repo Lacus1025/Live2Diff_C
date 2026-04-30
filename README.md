@@ -8,6 +8,15 @@ conda activate live2diff
 git clone https://github.com/Lvshu6/Live2Diff.git
 cd Live2Diff
 pip install -e .
+pip install -r requirements.txt
 cd co-tracker
 pip install -e .
-pip install matplotlib flow_vis tqdm tensorboard
+cd ..
+```
+## 运行示例
+```bash
+# 从huggingface下载并解压角色包到app/Live2D文件夹下 https://hf-mirror.com/Lvshu6/Live2Diff
+cd app/Live2D
+wget https://hf-mirror.com/Lvshu6/Live2Diff/resolve/main/Live2D/nuero.zip
+unzip nuero.zip
+```
