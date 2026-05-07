@@ -4,5 +4,5 @@ tqdm
 tensorboard
 fastapi == 0.128.0
 uvicorn
-PyQt6
+PyQt5
 openai
