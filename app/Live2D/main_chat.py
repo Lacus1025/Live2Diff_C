@@ -231,7 +231,8 @@ class MainWindow(QMainWindow):
         # 动画控制器
         self.anim = AnimationController(
             {
-                "get_node_path": lambda: self.current_image_path,
+                "get_node_path": lambda: (self.image_path_queue[-1]
+         if self.image_path_queue else self.current_image_path),
                 "get_track_points": lambda: self._current_t0,
                 "get_image_center": lambda: self._get_img_center(),
                 "is_queue_empty": lambda: self._is_queue_empty(),
@@ -460,9 +461,9 @@ class MainWindow(QMainWindow):
         added = 0
         with self.queue_lock:
             for n in paths:
-                if len(self.image_path_queue) < QUEUE_LEN:
-                    self.image_path_queue.append(n)
-                    added += 1
+                # if len(self.image_path_queue) < QUEUE_LEN:
+                self.image_path_queue.append(n)
+                added += 1
         return added
 
     # ----- 图像加载与导航 -----

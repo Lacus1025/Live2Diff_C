@@ -330,8 +330,8 @@ class AnimationController:
         if not track:
             return
 
-        dx = random.uniform(-2, 2)
-        dy = random.uniform(-5, 5)
+        dx = random.uniform(-100, 100)
+        dy = random.uniform(-100, 100)
         t1_target = [(x + dx, y + dy) for x, y in track]
 
         start_node = self._callbacks["get_node_path"]()
