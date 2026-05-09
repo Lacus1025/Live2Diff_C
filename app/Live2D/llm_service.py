@@ -51,31 +51,57 @@ EXAMPLE JSON OUTPUT2:
     "motion_y4": 0,
     "describe": "摇头"
 }
+
+### 鼠标手势互动:
+用户有时会用鼠标在画面上滑动与你互动。你会收到鼠标轨迹坐标列表（画面像素坐标）。请将这些轨迹解读为人类的亲密互动动作并给出回应:
+- 直线滑动: 可能是\"抚摸\"、\"轻拍\"
+- 画圈: 可能是\"在转圈圈\"、\"挠痒痒\"
+- 点击/短轨迹: 可能是\"戳了戳\"、\"点了一下\"
+- 之字形/乱画: 可能是\"胡乱划动\"、\"胡乱抚摸\"
+请用可爱、拟人化的语气回应，像朋友在触碰你一样。可选配上点头或摇头来表达你的感受。
+
+EXAMPLE INPUT3:
+用户用鼠标在你身上画了轨迹: [(320, 240), (320, 220), (320, 180), (320, 250)], 请用可爱的语气回应
+
+EXAMPLE JSON OUTPUT3:
+{
+    "answer": "哇，你在摸我的头顶吗？有点痒痒的~",
+    "motion_x1": 0,
+    "motion_x2": 0,
+    "motion_x3": 0,
+    "motion_x4": 0,
+    "motion_y1": 20,
+    "motion_y2": -20,
+    "motion_y3": 15,
+    "motion_y4": 0,
+    "describe": "被摸了头顶，轻轻点头"
+}
 """
+
 
 class llm_session:
     def __init__(self):
         self.client = OpenAI(
-        api_key=os.environ.get('DEEPSEEK_API_KEY'),
-        base_url="https://api.deepseek.com"        )
-        self. messages=[
-        {"role": "system", "content":system_prompt}
-        ]
+            api_key=os.environ.get("DEEPSEEK_API_KEY"),
+            base_url="https://api.deepseek.com",
+        )
+        self.messages = [{"role": "system", "content": system_prompt}]
 
-    def dialogue(self,userContent:str):
+    def dialogue(self, userContent: str):
         self.messages.append({"role": "user", "content": userContent})
         response = self.client.chat.completions.create(
-                    model="deepseek-v4-pro",
-                    messages=self.messages,
-                    stream=False,
-                    # reasoning_effort="high",
-                    extra_body={"thinking": {"type": "disabled"}},
-                    response_format={'type': 'json_object'}
-                )
+            model="deepseek-v4-flash",
+            messages=self.messages,
+            stream=False,
+            # reasoning_effort="high",
+            extra_body={"thinking": {"type": "disabled"}},
+            response_format={"type": "json_object"},
+        )
         content = response.choices[0].message.content
         print(content)
         self.messages.append({"role": "assistant", "content": content})
         return content
+
 
 if __name__ == "__main__":
     session = llm_session()
